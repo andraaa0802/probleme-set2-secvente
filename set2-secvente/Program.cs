@@ -137,7 +137,36 @@ namespace set2_secvente
         /// </summary>
         private static void P15()
         {
-           
+            int n, nr1, nr2, i, sch = 0;
+            bool ok = true;
+            Console.WriteLine("Cate numere contine secventa?");
+            n = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
+            string linie = Console.ReadLine();
+            char[] seps = { ' ' };
+            string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
+            nr1 = int.Parse(tokens[0]);
+            nr2 = int.Parse(tokens[1]);
+            if (nr1 <= nr2)
+            {
+                for (i = 2; i < n - 1; i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 > nr2)
+                        sch++;
+                    else if (nr1 < nr2 && sch != 0)
+                        ok = false;
+
+                }
+            }
+            else if (nr1 > nr2)
+                ok = false;
+
+            if (ok==true)
+                Console.WriteLine("Secventa este bitonica");
+            else
+                Console.WriteLine("Secventa NU este crescatoare bitonica");
         }
 
         /// <summary>
