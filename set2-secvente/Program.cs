@@ -146,7 +146,40 @@ namespace set2_secvente
         /// </summary>
         private static void P14()
         {
-            
+            int n, nr1, nr2, i, sch = 0;
+            Console.WriteLine("Cate numere contine secventa?");
+            n = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
+            string linie = Console.ReadLine();
+            char[] seps = { ' ' };
+            string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
+            nr1 = int.Parse(tokens[0]);
+            nr2 = int.Parse(tokens[1]);
+            if (nr1 < nr2)
+            {
+                for (i = 1; i < n - 1; i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 > nr2)
+                        sch++;
+                }
+            }
+            else if (nr1 > nr2)
+            {
+                for (i = 1; i < n - 1; i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 < nr2)
+                        sch++;
+                }
+            }
+
+            if (sch == 0 || sch == 1)
+                Console.WriteLine("Secventa este monoton rotita");
+            else
+                Console.WriteLine("Secventa NU este monoton rotita");
         }
 
         /// <summary>
@@ -157,8 +190,7 @@ namespace set2_secvente
         /// </summary>
         private static void P13()
         {
-            int n, nr1, nr2, i, aux,sch=0;
-            bool ok = true;
+            int n, nr1, nr2, i, sch=0;
             Console.WriteLine("Cate numere contine secventa?");
             n = int.Parse(Console.ReadLine());
             Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
@@ -167,9 +199,9 @@ namespace set2_secvente
             string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
             nr1 = int.Parse(tokens[0]);
             nr2 = int.Parse(tokens[1]);
-            if(nr1<nr2)
+            if (nr1 <= nr2)
             {
-                for(i=2;i<n-1;i++)
+                for (i = 2; i < n - 1; i++)
                 {
                     nr1 = int.Parse(tokens[i]);
                     nr2 = int.Parse(tokens[i + 1]);
@@ -177,16 +209,8 @@ namespace set2_secvente
                         sch++;
                 }
             }
-            else if (nr1>nr2)
-            {
-                for (i = 2; i < n - 1; i++)
-                {
-                    nr1 = int.Parse(tokens[i]);
-                    nr2 = int.Parse(tokens[i + 1]);
-                    if (nr1 < nr2)
-                        sch++;
-                }
-            }
+            else if(nr1>nr2)
+                sch = -1;
 
             if(sch==0 || sch==1)
                 Console.WriteLine("Secventa este crescatoare rotita");
