@@ -94,7 +94,7 @@ namespace set2_secvente
         /// </summary>
         private static void P17()
         {
-            int i,j,nr,k=0;
+            int i,nr,k=0,kmax=0;
             bool ok = true;
             Console.WriteLine("introduceti sirul:");
             string linie = Console.ReadLine();
@@ -105,17 +105,21 @@ namespace set2_secvente
             {
                 nr = int.Parse(tokens[i]);
                 if (nr == 0)
+                {
                     k++;
+                    if (k > kmax)
+                        kmax = k;
+                }
                 else if (nr == 1 && k == 0)
                     ok = false;
                 else
                     k--;
                 
             }
-            if(ok && k==0)
-                    Console.WriteLine(1);
+            if(ok!=false && k==0)
+                    Console.WriteLine($"Secventa de paranteze este corecta, iar nivelul maxim de incuibare este {kmax}");
                 else
-                    Console.WriteLine(0);
+                    Console.WriteLine("Secventa de paranteze NU este corecta");
         }
 
         /// <summary>
@@ -153,7 +157,41 @@ namespace set2_secvente
         /// </summary>
         private static void P13()
         {
-            
+            int n, nr1, nr2, i, aux,sch=0;
+            bool ok = true;
+            Console.WriteLine("Cate numere contine secventa?");
+            n = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
+            string linie = Console.ReadLine();
+            char[] seps = { ' ' };
+            string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
+            nr1 = int.Parse(tokens[0]);
+            nr2 = int.Parse(tokens[1]);
+            if(nr1<nr2)
+            {
+                for(i=2;i<n-1;i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 > nr2)
+                        sch++;
+                }
+            }
+            else if (nr1>nr2)
+            {
+                for (i = 2; i < n - 1; i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 < nr2)
+                        sch++;
+                }
+            }
+
+            if(sch==0 || sch==1)
+                Console.WriteLine("Secventa este crescatoare rotita");
+            else
+                Console.WriteLine("Secventa NU este crescatoare rotita");
         }
 
         /// <summary>
