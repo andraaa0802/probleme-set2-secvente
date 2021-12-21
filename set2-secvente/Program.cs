@@ -204,7 +204,7 @@ namespace set2_secvente
             if (ok==true)
                 Console.WriteLine("Secventa este bitonica");
             else
-                Console.WriteLine("Secventa NU este crescatoare bitonica");
+                Console.WriteLine("Secventa NU este bitonica");
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace set2_secvente
         /// </summary>
         private static void P14()
         {
-            int n, nr1, nr2, i, sch = 0;
+            int n, nr1, nr2, i, sch = 0,prim,ultim=-1;
             Console.WriteLine("Cate numere contine secventa?");
             n = int.Parse(Console.ReadLine());
             Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
@@ -222,6 +222,8 @@ namespace set2_secvente
             string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
             nr1 = int.Parse(tokens[0]);
             nr2 = int.Parse(tokens[1]);
+            prim = nr1;
+            
             if (nr1 < nr2)
             {
                 for (i = 1; i < n - 1; i++)
@@ -231,6 +233,11 @@ namespace set2_secvente
                     if (nr1 > nr2)
                         sch++;
                 }
+                ultim = int.Parse(tokens[i]);
+                if (sch == 0 || (sch == 1 && prim > ultim))
+                    Console.WriteLine("Secventa este sau poate fi transformata in monoton crescatoare");
+                else
+                    Console.WriteLine("Secventa NU este si nici NU poate fi transformata in monoton crescatoare");
             }
             else if (nr1 > nr2)
             {
@@ -241,12 +248,13 @@ namespace set2_secvente
                     if (nr1 < nr2)
                         sch++;
                 }
+                ultim = int.Parse(tokens[i]);
+                if (sch == 0 || (sch == 1 && prim < ultim))
+                    Console.WriteLine("Secventa este sau poate fi transformata in monoton descrescatoare");
+                else
+                    Console.WriteLine("Secventa NU este si nici NU poate fi transformata in monoton descrescatoare");
             }
 
-            if (sch == 0 || sch == 1)
-                Console.WriteLine("Secventa este monoton rotita");
-            else
-                Console.WriteLine("Secventa NU este monoton rotita");
         }
 
         /// <summary>
@@ -257,7 +265,7 @@ namespace set2_secvente
         /// </summary>
         private static void P13()
         {
-            int n, nr1, nr2, i, sch=0;
+            int n, nr1, nr2, i, sch=0,prim,ultim=-1;
             Console.WriteLine("Cate numere contine secventa?");
             n = int.Parse(Console.ReadLine());
             Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
@@ -266,6 +274,7 @@ namespace set2_secvente
             string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
             nr1 = int.Parse(tokens[0]);
             nr2 = int.Parse(tokens[1]);
+            prim = nr1;
             if (nr1 <= nr2)
             {
                 for (i = 2; i < n - 1; i++)
@@ -275,11 +284,22 @@ namespace set2_secvente
                     if (nr1 > nr2)
                         sch++;
                 }
+                ultim = int.Parse(tokens[i]);
             }
             else if(nr1>nr2)
-                sch = -1;
+            {
+                sch++;
+                for (i=2;i<n-1;i++)
+                {
+                    nr1 = int.Parse(tokens[i]);
+                    nr2 = int.Parse(tokens[i + 1]);
+                    if (nr1 > nr2)
+                        sch++;
+                }
+                ultim = int.Parse(tokens[i]);
+            }
 
-            if(sch==0 || sch==1)
+            if(sch==0 || (sch==1 && prim>ultim)) 
                 Console.WriteLine("Secventa este crescatoare rotita");
             else
                 Console.WriteLine("Secventa NU este crescatoare rotita");
