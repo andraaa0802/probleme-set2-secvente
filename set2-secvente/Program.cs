@@ -128,45 +128,45 @@ namespace set2_secvente
         /// </summary>
         private static void P16()
         {
-            int n, nr1, nr2, i, sch = 0;
-            bool ok = true;
+            int n, nr1, nr2, i, monotonia=0,sch=0,prim,ultim; //pt monotonie: 0 inseamna oricare, 1 inseamna crescatoare, -1 inseamna descrescatoare; sch se refera la nr schimbari de monotonie
             Console.WriteLine("Cate numere contine secventa?");
             n = int.Parse(Console.ReadLine());
-            Console.WriteLine($"Introduceti cele {n} numere pe o singura linie, separate prin cate-un spatiu");
-            string linie = Console.ReadLine();
-            char[] seps = { ' ' };
-            string[] tokens = linie.Split(seps, StringSplitOptions.RemoveEmptyEntries);
-            nr1 = int.Parse(tokens[0]);
-            nr2 = int.Parse(tokens[1]);
-            if (nr1 <= nr2)
+            Console.WriteLine("introduceti numerele pe cate o linie:");
+            nr1 = prim= int.Parse(Console.ReadLine());
+            for(i=1;i<n;i++)
             {
-                for (i = 1; i < n - 1; i++)
+                nr2 = int.Parse(Console.ReadLine());
+                if (nr1<nr2)
                 {
-                    nr1 = int.Parse(tokens[i]);
-                    nr2 = int.Parse(tokens[i + 1]);
-                    if (nr1 > nr2)
+                    if (monotonia == 0)
+                        monotonia = 1;
+                    else if (monotonia == -1)
+                    {
                         sch++;
-                    else if (nr1 < nr2 && sch != 0)
-                        ok = false;
+                        monotonia = 1;
+                    }
                 }
-            }
-            else if (nr1 >= nr2)
-            {
-                for (i = 1; i < n - 1; i++)
+                else if (nr1>nr2)
                 {
-                    nr1 = int.Parse(tokens[i]);
-                    nr2 = int.Parse(tokens[i + 1]);
-                    if (nr1 < nr2)
+                    if (monotonia == 0)
+                        monotonia = -1;
+                    else if (monotonia==1)
+                    {
                         sch++;
-                    else if (nr1 > nr2 && sch != 0)
-                        ok = false;
+                        monotonia = -1;
+                    }
                 }
+                nr1 = nr2;
+                if (sch > 2)
+                    break;
             }
-
-            if (ok==true)
-                Console.WriteLine("Secventa este bitonica rotita");
+            ultim = nr1;
+            if (sch==0)
+                Console.WriteLine("Secventa este bitonica/ bitonica rotita");
+            else if ((sch==1 || sch==2) && prim<=ultim)
+                Console.WriteLine("Secventa este bitonica/ bitonica rotita");
             else
-                Console.WriteLine("Secventa NU este bitonica rotita");
+                Console.WriteLine("Secventa NU este bitonica/ bitonica rotita");
         }
 
         /// <summary>
